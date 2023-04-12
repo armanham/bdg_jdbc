@@ -6,26 +6,28 @@ import java.sql.SQLException;
 
 public class DBConnectionManager {
 
-    public static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+    public static final String URL = "jdbc:postgresql://localhost:5432/company";
     public static final String USERNAME = "postgres";
     public static final String PASSWORD = "2232";
+    private static Connection connection;
 
 
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            return connection;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return null;
     }
 
-    public static void closeConnection(Connection con) {
-        if (con == null) {
+    public static void closeConnection() {
+        if (connection == null) {
             throw new NullPointerException("Connection is null:");
         }
         try {
-            con.close();
+            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

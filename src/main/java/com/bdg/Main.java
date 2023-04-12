@@ -1,14 +1,18 @@
 package com.bdg;
 
 import com.bdg.db.DBConnectionManager;
+import com.bdg.sql.DQL;
 
-import java.sql.Connection;
+import java.sql.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         Connection connection = DBConnectionManager.getConnection();
 
-        DBConnectionManager.closeConnection(connection);
+        DQL.showEmployee(connection);
+        System.out.println(DQL.countRowsOfEmployee(connection));
+
+        DBConnectionManager.closeConnection();
     }
 }
